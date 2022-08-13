@@ -1,6 +1,8 @@
 class Solution {
 public:
     void setZeroes(vector<vector<int>>& matrix) {
+        
+        // Using m*n space approach
         int n = matrix.size();
         int m = matrix[0].size();
 //         vector<vector<int>> temp = matrix;
@@ -53,21 +55,46 @@ public:
         // Time complexity - O(m*n)+O(m*n)
         // Space complexity - O(m+n)
         
-        vector<int>rows(n,-1),cols(m,-1);
+//         vector<int>rows(n,-1),cols(m,-1);
+//         for(int i=0;i<n;i++){
+//             for(int j=0;j<m;j++){
+//                 if(matrix[i][j]==0) {
+//                     rows[i]=0;
+//                     cols[j]=0;
+//                 }
+//             }
+//         }
+        
+//        for(int i=0;i<n;i++){
+//            for(int j=0;j<m;j++){
+//                if(rows[i]==0 || cols[j]==0) matrix[i][j]=0;
+//            }
+//        }
+        
+        
+        
+        //  Best
+        // Time complexity - O(m*n)+O(m*n)
+        // Space complexity - O(1)
+        
+        
+        int cols0=1;
         for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){
+            if(matrix[i][0]==0) cols0=0;
+            for(int j=1;j<m;j++) {
                 if(matrix[i][j]==0) {
-                    rows[i]=0;
-                    cols[j]=0;
+                    matrix[i][0]=0;
+                    matrix[0][j]=0;
                 }
             }
         }
         
-       for(int i=0;i<n;i++){
-           for(int j=0;j<m;j++){
-               if(rows[i]==0 || cols[j]==0) matrix[i][j]=0;
-           }
-       }
+        for(int i=(n-1);i>=0;i--) {
+            for(int j=(m-1);j>=1;j--) {
+                if(matrix[i][0]==0 || matrix[0][j]==0) matrix[i][j]=0;
+            }
+            if(cols0==0) matrix[i][0]=0;
+        }
         
     }
 };
